@@ -1,3 +1,25 @@
-# startup specification
+# Startup Specification
 
-blah
+## Elevator Pitch
+I plan on making a game that allows people to play a game of War (the card game) with another person online. I think that this could be a fun and easy game to play with other people. People could play with their friends or with a stranger. Their winning percentage would be kept track of and be displayed on a leaderboard. 
+
+## Key Features
+
+### Authentication
+They will be able to log in with a username and a password, this will allow the server to know who is playing in that instance. 
+
+### Leaderboard
+The server will be connected to a database that will store a person's login info and their win/loss record. The people with the best win/loss ratio will be shown on a leaderboard that every user will be able to see.
+
+### Game Play
+Once a game has been started the users will share game data through a websocket and that will determine who will win each round. They will each start out with half a deck of cards, they will each play a card and whoever has the higher card gets both cards. The virtual cards will be traded through a websocket. The person with the whole deck at the end wins. 
+
+
+## Concept Images
+### Login Page
+![login](https://github.com/ninjaluke45/startup/assets/97245977/7cacb46d-74b3-43f4-aa5a-49c19d151a45)
+### Lobby
+![lobby](https://github.com/ninjaluke45/startup/assets/97245977/7e0c1dab-c761-48b6-a6d0-4741e94bfd54)
+### Game
+![game](https://github.com/ninjaluke45/startup/assets/97245977/cc74b532-490a-492e-8b1c-110516c594e4)
+
