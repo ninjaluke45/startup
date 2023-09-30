@@ -17,9 +17,10 @@
         <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
         <menu>
           <li><a href="index.html">Home</a></li>
-          <li><a href="play.html">Play</a></li>
-          <li><a href="scores.html">Scores</a></li>
-          <li><a href="about.html">About</a></li>
+          <li><a href="game.html">Game</a></li>
+          <li><a href="lobby.html">Lobby</a></li>
+          <li><a href="leaderboard.html">Leaderboard</a></li>
+          
         </menu>
       </nav>
 
@@ -28,13 +29,36 @@
     </header>
 
     <main>
-      <h1>Welcome</h1>
-      <p>Login to play</p>
-      <form method="get" action="play.html">
-        <label for="name">Name</label>
-        <input type="text" id="name" placeholder="Your name here" />
-        <button type="submit">Login</button>
-      </form>
+      <h2>High Scores</h2>
+      <table>
+        <thead>
+          <tr>
+      <th>Rank</th>
+      <th>Player Name</th>
+      <th>Winning Percentage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Player 1</td>
+      <td>.75</td>
+      
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Player 2</td>
+      <td>.70</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Player 3</td>
+      <td>.66</td>
+    </tr>
+        </tbody>
+      </table>
+      
+      
     </main>
 
     <footer>
@@ -43,5 +67,5 @@
       <br />
       <a href="https://github.com/ninjaluke45/startup">Luke's GitHub</a>
     </footer>
-  </body>
+</body>
 </html>
