@@ -23,3 +23,25 @@ Once a game has been started the users will share game data through a websocket 
 ### Game
 ![game](https://github.com/ninjaluke45/startup/assets/97245977/cc74b532-490a-492e-8b1c-110516c594e4)
 
+## HTML Deliverable
+For this deliverable I built out the structure of my application using HTML.
+
+<ul>
+  <li>HTML pages - Four HTML pages that give a place to login, join a game, play the game, and view a leaderboard</li>
+  <li>Links - Each page has a link to the other pages</li>
+  
+  <li>Text - there are labels for each function that a user is able to take</li>
+  <li>Images - In the play screen there are pictures for the backs of playing cards</li>
+  <li>Login - Input boxes and submit button for login.</li>
+  <li>Database - data base will hold current users and the high scores of all users</li>
+  <li>WebSocket - Websockets will transfer the data of who played what cards. </li>
+</ul>
+
+
+
+
+
+
+
+
+
