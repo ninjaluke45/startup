@@ -1,0 +1,112 @@
+/* Stylize the way I want */
+body, h1, h2, ul, li, p, form, input, button {
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    background-color: #FF6B6B;
+    font-family: Arial, sans-serif;
+    color: #FFF;
+    text-align: center;
+}
+
+
+header {
+    background-color: #FFCB6B;
+    padding: 20px;
+    border-bottom: 3px solid #FFA14E;
+}
+
+h1 {
+    font-size: 36px;
+    text-transform: uppercase;
+    margin: 10px 0;
+}
+
+nav {
+    margin: 20px 0;
+}
+
+menu {
+    list-style: none;
+}
+
+menu li {
+    display: inline;
+    margin-right: 20px;
+}
+
+menu a {
+    text-decoration: none;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Style the main content */
+main {
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+form {
+    display: inline-block;
+    text-align: left;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #FFA14E;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #FFA14E;
+    color: #FFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+footer {
+    background-color: #FFCB6B;
+    padding: 10px;
+}
+
+.text-reset {
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+a:hover {
+    text-decoration: underline;
+    color: #FF6B6B;
+}
