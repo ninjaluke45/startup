@@ -37,6 +37,21 @@ For this deliverable I built out the structure of my application using HTML.
   <li>WebSocket - Websockets will transfer the data of who played what cards. </li>
 </ul>
 
+## CSS Deliverable
+For this deliverable I made the layout into a design that I liked.
+
+<ul>
+  <li>Links - I made it so that when you hover over a link it underlines it</li>
+  <li>Colors - I added colors to the project in a way that I liked</li>
+  <li>Tables - The tables in the project have different colored rows for added legibility</li>
+  <li>Buttons - buttons have curved edges and a different font</li>
+  <li>Input Boxes - I added a border to the login box and gave it rounded edges</li>
+  
+</ul>
+
+
+
+
 
 
 
