@@ -50,14 +50,14 @@ For this deliverable I made the layout into a design that I liked.
 </ul>
 
 ## JS Deliverable
-For this deliverable I made the layout into a design that I liked.
+For this deliverable I added game logic and other useful functionality.
 
 <ul>
-  <li>Links - I made it so that when you hover over a link it underlines it</li>
-  <li>Colors - I added colors to the project in a way that I liked</li>
-  <li>Tables - The tables in the project have different colored rows for added legibility</li>
-  <li>Buttons - buttons have curved edges and a different font</li>
-  <li>Input Boxes - I added a border to the login box and gave it rounded edges</li>
+  <li>Login - Added a function that will save login data to local storage</li>
+  <li>Database data - I added functions that will be useful in updating tables based on database data</li>
+  <li>Websocket - I added game logic that could be used to play with another person</li>
+  <li>Bot game - I added a bot verison of the game to prove that game logic works</li>
+  <li>Win loss data - win loss percentages are stored locally adn sent to the database if possible</li>
   
 </ul>
 
