@@ -98,4 +98,18 @@ a {
 a:hover {
     text-decoration: underline;
     color: #FF6B6B;
+
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-between; /* This centers the buttons horizontally */
+    height: 550px;
+}
+
+.card-left, .card-right {
+    flex: 1; /* Distribute available space equally, making them centered */
+    display: flex;
+    justify-content: center; /* Center the image horizontally within the button */
+    align-items: center; /* Center the image vertically within the button */
 }
