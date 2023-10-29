@@ -18,7 +18,6 @@
         <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
         <menu>
           <li><a href="index.html">Home</a></li>
-          <li><a href="game.html">Game</a></li>
           <li><a href="lobby.html">Lobby</a></li>
           <li><a href="leaderboard.html">Leaderboard</a></li>
         </menu>
@@ -27,25 +26,28 @@
       <br />
 
       <div>
-        <h2>[username] vs. [other player]</h2>
-        <button>Play card</button>
+        <h2 class="players">[username] vs. [other player]</h2>
+        <h2 class="cardNum">Num cards: 26</h2>
+        <button id = "startRoundButton">Play card</button>
       </div>
       
     
-      <button>
-        <img alt="Playing card" src="https://www.nikhilsmagicshop.com/image/cache/catalog/2020/mon_b_bakc-550x550.jpg" />
+      <div class="card-container">
+        <button class="card-left">
+            <img alt="Playing card1" src="https://www.nikhilsmagicshop.com/image/cache/catalog/2020/mon_b_bakc-550x550.jpg" />
         </button>
-      
-        <button>
-            <img alt="Playing card" src="https://www.nikhilsmagicshop.com/image/cache/catalog/2020/mon_b_bakc-550x550.jpg" />
-            </button>
-      <br />
-
+    
+        <button class="card-right">
+            <img alt="Playing card2" src="https://www.nikhilsmagicshop.com/image/cache/catalog/2020/mon_b_bakc-550x550.jpg" />
+        </button>
+    </div>
     <footer>
       <hr />
       <span class="text-reset">Author Name(s)</span>
       <br />
       <a href="https://github.com/ninjaluke45/startup">Luke's GitHub</a>
     </footer>
+    <script src="game.js"></script>
+
   </body>
 </html>

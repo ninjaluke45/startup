@@ -24,11 +24,23 @@ class GameOfWar {
         if (bot) {
             this.playBotWithButton();
         }
+
+        // once I have the websocket will add a player mode
     }
 
     playBotWithButton() {
         const startRoundButton = document.getElementById('startRoundButton'); // Replace with your actual button
         let gameInProgress = true;
+
+        if(this.userDeck.length == 0){
+            winner(False);
+            window.location.href = "lobby.html";
+        }
+
+        else if(this.botDeck.length == 0){
+            winner(True);
+            window.location.href = "lobby.html";
+        }
 
         
 
@@ -289,4 +301,30 @@ function updateCount(numCards){
     element.textContent = updatedValue;
 
   
+}
+
+function winner(win){
+    
+    const totalGames = localStorage.getItem('totGames');
+
+    const totGames = parseInt(totalGames);
+
+    //win data from the data base would be accessed here
+
+    if (!isNaN(totGames)) {
+        localStorage.setItem('totGames', (totGames + 1).toString());
+    } else {
+        localStorage.setItem('totGames', (1).toString());
+    }
+
+    const totalWins = localStorage.getItem('totWins');
+
+    const totWins = parseInt(totalWins);
+
+    if (!isNaN(totWins)&&win) {
+        localStorage.setItem('totWins', (totWins + 1).toString());
+    } else {
+        localStorage.setItem('totWins', (1).toString());
+    }
+
 }
