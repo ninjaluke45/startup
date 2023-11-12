@@ -20,6 +20,8 @@ class GameOfWar {
         this.userDeck = buildDeck();
         this.botDeck = bot ? buildDeck() : null; // Create bot's deck only if bot is enabled
         this.junkDeck = []
+        this.over = false;
+        this.win = false;
 
         if (bot) {
             this.playBotWithButton();
@@ -30,7 +32,7 @@ class GameOfWar {
 
     playBotWithButton() {
         const startRoundButton = document.getElementById('startRoundButton'); // Replace with your actual button
-        let gameInProgress = true;
+        
 
         if(this.userDeck.length == 0){
             winner(False);
@@ -309,6 +311,9 @@ function winner(win){
 
     const totGames = parseInt(totalGames);
 
+    saveScore(localStorage.getItem("username"), win)
+
+
     //win data from the data base would be accessed here
 
     if (!isNaN(totGames)) {
@@ -328,3 +333,22 @@ function winner(win){
     }
 
 }
+
+async function saveScore(name, win) {
+    const newScore = {name: name, win: win};
+
+    try {
+      const response = await fetch('/api/score', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(newScore),
+      });
+
+      // Store what the service gave us as the high scores
+      const scores = await response.json();
+      localStorage.setItem('scores', JSON.stringify(scores));
+    } catch {
+      // If there was an error then just track scores locally
+      console.log("unable to connect to server")
+    }
+  }

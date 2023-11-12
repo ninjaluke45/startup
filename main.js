@@ -63,8 +63,34 @@ function compScore(score){
 function updateScores(newScore, scores) {
   // this is where a third party service call could be made
   // third party service would take priorty but if failed would use below code
+  found = false;
+  
+  for (const [i, prevScore] of scores.entries()) {
+    if(newScore.name === prevScore.name){
+      prevScore.total = prevScore.total + 1;
+      found = true;
 
-  let found = false;
+      newScore = prevScore;
+      if(win){
+        prevScore.win = prevScore.win + 1;
+      }
+      break;
+    }
+  }  
+
+  if(!found){
+    newScore.total = 1;
+    if(win){
+      newScore.win = 1;
+    }
+    else{
+      newScore.win = 0;
+    }
+  }
+
+  
+
+  found = false;
   for (const [i, prevScore] of scores.entries()) {
     if (compScore(newScore) > compScore(prevScore)) {
       scores.splice(i, 0, newScore);
@@ -74,6 +100,7 @@ function updateScores(newScore, scores) {
   }
 
   if (!found) {
+    
     scores.push(newScore);
   }
 
