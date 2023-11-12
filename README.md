@@ -61,6 +61,19 @@ For this deliverable I added game logic and other useful functionality.
   
 </ul>
 
+## Start up Service
+For this deliverable I added the ability for the frontend to communicate with the backend.
+
+<ul>
+
+  <li>Uploaded an HTTP service with Node.js and Express</li>
+  <li>I send the frontend to the browser from the backend using express static middleware</li>
+  <li>My frontend has space allocated for third party service endpoints</li>
+  <li>My backend can recieve and send data about users and their win/loss record</li>
+  <li>My frontend can send and recieve data about users and their win/loss record</li>
+  
+</ul>
+
 
 
 
