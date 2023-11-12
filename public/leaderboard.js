@@ -10,10 +10,10 @@ function updateTable(data) {
       rankCell.textContent = index + 1; // Rank
   
       const playerNameCell = document.createElement('td');
-      playerNameCell.textContent = entry.playerName; // Player Name
+      playerNameCell.textContent = entry.name; // Player Name
   
       const winningPercentageCell = document.createElement('td');
-      winningPercentageCell.textContent = entry.winningPercentage; // Winning Percentage
+      winningPercentageCell.textContent = entry.perc; // Winning Percentage
   
       // Append cells to the row
       row.appendChild(rankCell);
@@ -24,4 +24,36 @@ function updateTable(data) {
       tableBody.appendChild(row);
     });
   }
+
+
+  function onStartup(){
+    getPlayers();
+    playerList = JSON.parse(localStorage.getItem("players"))
+  
+    console.log("playerlist: ", playerList);
+  
+    updateTable(playerList);
+  
+  
+    return true;
+  }
+  
+  async function getPlayers() {
+  
+    try {
+      const response = await fetch('/api/players', {
+        method: 'GET',
+        headers: {'content-type': 'application/json'},
+      });
+  
+      // Store what the service gave us as the high scores
+      const scores = await response.json();
+      localStorage.setItem('players', JSON.stringify(scores));
+    } catch {
+      // If there was an error then just track scores locally
+      console.log("failed to get players")
+    }
+  }
+  
+  onStartup();
   

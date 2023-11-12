@@ -36,6 +36,10 @@ apiRouter.post('/score', (req, res) => {
 
 // GetPlayers
 apiRouter.get('/players', (_req, res) => {
+  //for debug, remove when live
+  addPlayer("Player 4 (from server)", 75);
+  addPlayer("Player 5 (from server)", 66);
+  addPlayer("Player 6 (from server)", 25);
   res.send(players);
 });
 
@@ -83,19 +87,44 @@ let players = [];
 function updatePlayers(player) {
 // a third party service call could be made here
 
+  
+
   let found = false;
   for (const [i, oldPlayer] of players.entries()) {
     if (player.name === oldPlayer.name) {
       found = true;
+
+      for (const [i, prevScore] of scores.entries()) {
+        if(player.name === prevScore.name){
+          player.perc = compScore(prevScore)
+          break;
+        }
+      }  
+
       break;
     }
   }
 
   if (!found) {
+    player.perc = 0;
     players.push(player);
   }
 
 
   return players;
+}
+
+function addPlayer(name, perc) {
+  // Check if a player with the same name already exists
+  var existingPlayer = players.find(player => player.name === name);
+
+  if (!existingPlayer) {
+      // If not, add the new player to the array
+      var player = {
+          name: name,
+          perc: perc
+      };
+      players.push(player);
+  }
 }
 

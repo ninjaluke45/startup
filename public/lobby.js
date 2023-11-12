@@ -11,15 +11,15 @@ function startGame(op) {
 function updateTable(data) {
   const tableBody = document.querySelector('table tbody');
   tableBody.innerHTML = ''; // Clear the table body
-
+  console.log(data)
   data.forEach((entry) => {
     const row = document.createElement('tr');
 
     const playerNameCell = document.createElement('td');
-    playerNameCell.textContent = entry.playerName; // Player Name
+    playerNameCell.textContent = entry.name; // Player Name
 
     const winningPercentageCell = document.createElement('td');
-    winningPercentageCell.textContent = entry.winningPercentage; // Winning Percentage
+    winningPercentageCell.textContent = entry.perc; // Winning Percentage
 
     const actionCell = document.createElement('td');
     const playButton = document.createElement('button');
@@ -37,3 +37,33 @@ function updateTable(data) {
   });
 }
 
+function onStartup(){
+  getPlayers();
+  playerList = JSON.parse(localStorage.getItem("players"))
+
+  console.log("playerlist: ", playerList);
+
+  updateTable(playerList);
+
+
+  return true;
+}
+
+async function getPlayers() {
+
+  try {
+    const response = await fetch('/api/players', {
+      method: 'GET',
+      headers: {'content-type': 'application/json'},
+    });
+
+    // Store what the service gave us as the high scores
+    const scores = await response.json();
+    localStorage.setItem('players', JSON.stringify(scores));
+  } catch {
+    // If there was an error then just track scores locally
+    console.log("failed to get players")
+  }
+}
+
+onStartup();
