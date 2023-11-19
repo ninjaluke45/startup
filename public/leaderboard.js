@@ -13,7 +13,7 @@ function updateTable(data) {
       playerNameCell.textContent = entry.name; // Player Name
   
       const winningPercentageCell = document.createElement('td');
-      winningPercentageCell.textContent = entry.perc; // Winning Percentage
+      winningPercentageCell.textContent = String(math.round(entry.win / entry.tot)*100); // Winning Percentage
   
       // Append cells to the row
       row.appendChild(rankCell);
@@ -27,28 +27,28 @@ function updateTable(data) {
 
 
   function onStartup(){
-    getPlayers();
-    playerList = JSON.parse(localStorage.getItem("players"))
+    getScores();
+    scoreList = JSON.parse(localStorage.getItem("scores"))
   
-    console.log("playerlist: ", playerList);
+    console.log("scorelist: ", scoreList);
   
-    updateTable(playerList);
+    updateTable(scoreList);
   
   
     return true;
   }
   
-  async function getPlayers() {
+  async function getScores() {
   
     try {
-      const response = await fetch('/api/players', {
+      const response = await fetch('/api/scores', {
         method: 'GET',
         headers: {'content-type': 'application/json'},
       });
   
       // Store what the service gave us as the high scores
       const scores = await response.json();
-      localStorage.setItem('players', JSON.stringify(scores));
+      localStorage.setItem('scores', JSON.stringify(scores));
     } catch {
       // If there was an error then just track scores locally
       console.log("failed to get players")

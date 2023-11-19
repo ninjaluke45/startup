@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+var mondo_connection = false;
+
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
@@ -31,6 +33,10 @@ app.listen(port, () => {
 // GetScores
 apiRouter.get('/scores', (_req, res) => {
   res.send(scores);
+});
+
+apiRouter.get('/connection', (_req, res) => {
+  res.send(mondo_connection);
 });
 
 // SubmitScore
@@ -68,6 +74,38 @@ function compScore(score){
 function updateScores(newScore, scores) {
   // this is where a third party service call could be made
   // third party service would take priorty but if failed would use below code
+  collection = getMondoScores()
+  if(mondo_connection){
+    var exists = false;
+    var doc = null;
+    exists, doc = mondoExists("scores", newScore.name);
+    if(exists){
+      const tot = doc.total + 1;
+      if(newScore.win){
+        const win = doc.win + 1;
+
+      }
+      else{
+        const win = doc.win;
+      }
+
+    }
+    else{
+      if(newScore.win){
+        var score = {name: newScore.name, win: 1, total: 1}
+
+      }
+      else{
+        var score = {name: newScore.name, win: 0, total: 1}
+      }
+      
+      insertMondo("scores", score)
+
+    }
+
+    return getMondoScores();
+  }
+  
   found = false;
   
   for (const [i, prevScore] of scores.entries()) {
@@ -114,11 +152,26 @@ function updateScores(newScore, scores) {
   return scores;
 }
 
-
 let players = [];
 function updatePlayers(player) {
 // a third party service call could be made here
+collection = getMondoScores()
+if(mondo_connection){
+  var exists = false;
+  var doc = null;
+  exists, doc = mondoExists("players", player.name);
+  if(exists){
+    return getMondoPlayers();
+  }
+  else{
+    
+    
+    insertMondo("players", player)
 
+  }
+
+  return getMondoPlayers();
+}
   
 
   let found = false;
@@ -147,16 +200,38 @@ function updatePlayers(player) {
 }
 
 function addPlayer(name, perc) {
-  // Check if a player with the same name already exists
-  var existingPlayer = players.find(player => player.name === name);
+  collection = getMondo();
 
-  if (!existingPlayer) {
-      // If not, add the new player to the array
-      var player = {
-          name: name,
-          perc: perc
-      };
-      players.push(player);
+  if(mondo_connection){
+
+    var player = {
+      name: name,
+      perc: perc
+    };
+
+
+    if(!mondoExists("players", name)[0]){
+      insertMondo("players", player);
+    }
+
+    
+    
+
+  }
+  else{
+
+
+    // Check if a player with the same name already exists
+    var existingPlayer = players.find(player => player.name === name);
+
+    if (!existingPlayer) {
+        // If not, add the new player to the array
+        var player = {
+            name: name,
+            perc: perc
+        };
+        players.push(player);
+    }
   }
 }
 
@@ -175,12 +250,38 @@ async function getMondoPlayers(){
   return allDocuments;
 }
 
+async function mondoExists(table, name){
+  collection = getMondo(table);
+  
+  const query = { name: name };
+  const document = await collection.findOne(query);
+
+  if (document) {
+    return true, document;
+  } else {
+    return false, document;
+  }
+}
+
 async function getMondoScores(){
   collection = getMondo("scores");
+
+  const options = {
+    sort: { score: -1 },
+    limit: 10,
+  };
 
   // Query the documents
   const cursor = collection.find();
   const allDocuments = await cursor.toArray();
+
+
+  allDocuments.forEach((doc) => {
+    doc.compScore = compScore(doc); // Assuming this function calculates the score
+  });
+  
+  // Sort the array based on the compScores
+  allDocuments.sort((a, b) => b.compScore - a.compScore);
 
   return allDocuments;
 }
@@ -196,12 +297,15 @@ function getMondo(collect){
   (async function testConnection() {
     await client.connect();
     await db.command({ ping: 1 });
+    mondo_connection = True;
   })().catch((ex) => {
     console.log(`Unable to connect to database with ${url} because ${ex.message}`);
+    mondo_connection = False;
     process.exit(1);
   });
 
   return collection;
   
 }
+
 
