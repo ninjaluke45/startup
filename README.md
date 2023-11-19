@@ -83,6 +83,7 @@ For this deliverable I added the ability to connect to mongo db
   <li>I send the frontend to the browser from the backend using express static middleware</li>
   <li>backend endpoints for manipulating application data added to index.j</li>
   <li>Stores application data in MongoDB</li>
+
 </ul>
 
 
