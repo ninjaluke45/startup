@@ -31,7 +31,9 @@ app.listen(port, () => {
 });
 
 // GetScores
-apiRouter.get('/scores', (_req, res) => {
+apiRouter.get('/scores', async (_req, res) => {
+  scores = await getMondoScores();
+  console.log("index scores", scores)
   res.send(scores);
 });
 
@@ -46,11 +48,9 @@ apiRouter.post('/score', (req, res) => {
 });
 
 // GetPlayers
-apiRouter.get('/players', (_req, res) => {
-  //for debug, remove when live
-  addPlayer("Player 4 (from server)", 75);
-  addPlayer("Player 5 (from server)", 66);
-  addPlayer("Player 6 (from server)", 25);
+apiRouter.get('/players', async (_req, res) => {
+  players = await getMondoPlayers();
+  console.log("2:", players)
   res.send(players);
 });
 
@@ -247,7 +247,9 @@ async function getMondoPlayers(){
   const cursor = collection.find();
   const allDocuments = await cursor.toArray();
 
-  return allDocuments;
+  console.log("1:", allDocuments)
+
+  return await allDocuments;
 }
 
 async function mondoExists(table, name){
@@ -283,7 +285,7 @@ async function getMondoScores(){
   // Sort the array based on the compScores
   allDocuments.sort((a, b) => b.compScore - a.compScore);
 
-  return allDocuments;
+  return await allDocuments;
 }
 
 function getMondo(collect){
@@ -297,7 +299,7 @@ function getMondo(collect){
   (async function testConnection() {
     await client.connect();
     await db.command({ ping: 1 });
-    mondo_connection = True;
+    mondo_connection = true;
   })().catch((ex) => {
     console.log(`Unable to connect to database with ${url} because ${ex.message}`);
     mondo_connection = False;
@@ -307,5 +309,6 @@ function getMondo(collect){
   return collection;
   
 }
+
 
 

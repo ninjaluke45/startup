@@ -13,7 +13,7 @@ function updateTable(data) {
       playerNameCell.textContent = entry.name; // Player Name
   
       const winningPercentageCell = document.createElement('td');
-      winningPercentageCell.textContent = String(math.round(entry.win / entry.tot)*100); // Winning Percentage
+      winningPercentageCell.textContent = String(Math.round(entry.win / entry.tot)*100); // Winning Percentage
   
       // Append cells to the row
       row.appendChild(rankCell);
