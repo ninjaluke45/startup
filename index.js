@@ -14,6 +14,11 @@ app.use(express.static('public'));
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
+
+// set up mondo database connection
+const { MongoClient } = require('mongodb');
+const config = require('./.gitignore/dbConfig.json');
+
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
@@ -153,5 +158,50 @@ function addPlayer(name, perc) {
       };
       players.push(player);
   }
+}
+
+async function insertMondo(table, item){
+  collection = getMondo(table);
+  await collection.insertOne(item);
+}
+
+async function getMondoPlayers(){
+  collection = getMondo("players");
+
+  // Query the documents
+  const cursor = collection.find();
+  const allDocuments = await cursor.toArray();
+
+  return allDocuments;
+}
+
+async function getMondoScores(){
+  collection = getMondo("scores");
+
+  // Query the documents
+  const cursor = collection.find();
+  const allDocuments = await cursor.toArray();
+
+  return allDocuments;
+}
+
+function getMondo(collect){
+  // Connect to the database cluster
+  const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+  const client = new MongoClient(url);
+  const db = client.db('StartUp');
+  const collection = db.collection(collect);
+
+  // Test that you can connect to the database
+  (async function testConnection() {
+    await client.connect();
+    await db.command({ ping: 1 });
+  })().catch((ex) => {
+    console.log(`Unable to connect to database with ${url} because ${ex.message}`);
+    process.exit(1);
+  });
+
+  return collection;
+  
 }
 
