@@ -87,6 +87,19 @@ For this deliverable I added the ability to connect to mongo db
 </ul>
 
 
+## Login deliverable
+For this deliverable I added the ability to login to the website
+
+<ul>
+
+  <li>Supports new user registration</li>
+  <li>Stores and retrieves credentials in MongoDB</li>
+  <li>Supports existing user authentication</li>
+  <li>If you haven't logged in on the browser you are in you cannot play the game</li>
+
+</ul>
+
+
 
 
 

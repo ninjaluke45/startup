@@ -1,8 +1,17 @@
 function startGame(op) {
-  const opp = op.classList[0];
+  const opp = op.classList[0]
 
     localStorage.setItem("opponent", opp);
-    window.location.href = "game.html";
+
+    username = localStorage.getItem("userName").valueOf
+
+    if(username){
+      window.location.href = "game.html";
+    }
+    else{
+      window.location.href = "index.html";
+    }
+    
   }
 
 

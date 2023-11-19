@@ -30,7 +30,7 @@ function updateTable(data) {
     getScores();
     scoreList = JSON.parse(localStorage.getItem("scores"))
   
-    console.log("scorelist: ", scoreList);
+    
   
     updateTable(scoreList);
   

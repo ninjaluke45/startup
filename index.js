@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
 
+const uuid = require('uuid');
+const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
+
+app.use(cookieParser());
+app.use(express.json());
+
 var mondo_connection = false;
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
@@ -33,7 +40,6 @@ app.listen(port, () => {
 // GetScores
 apiRouter.get('/scores', async (_req, res) => {
   scores = await getMondoScores();
-  console.log("index scores", scores)
   res.send(scores);
 });
 
@@ -50,7 +56,6 @@ apiRouter.post('/score', (req, res) => {
 // GetPlayers
 apiRouter.get('/players', async (_req, res) => {
   players = await getMondoPlayers();
-  console.log("2:", players)
   res.send(players);
 });
 
@@ -247,7 +252,6 @@ async function getMondoPlayers(){
   const cursor = collection.find();
   const allDocuments = await cursor.toArray();
 
-  console.log("1:", allDocuments)
 
   return await allDocuments;
 }
@@ -309,6 +313,94 @@ function getMondo(collect){
   return collection;
   
 }
+
+apiRouter.post('/auth/login', async (req, res) => {
+
+  let user = await getUser(req.body.email);
+  console.log("user:", user) 
+  if (!user) {
+    console.log("got in login")
+    // Username does not exist, create a new user
+    user = await createUser(req.body.email, req.body.password);
+    setAuthCookie(res, user.token);
+    res.status(201).send({ id: user._id, msg: 'User created' , ok: true});
+    console.log("user created")
+    return;
+  }
+
+  const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
+  if (isPasswordValid) {
+    // Password matches
+    console.log("success")
+    setAuthCookie(res, user.token);
+    res.send({ id: user._id , ok: true});
+  } else {
+    // Username exists but the password is incorrect
+    console.log("failure")
+    res.status(401).send({ msg: 'Unauthorized' , ok: false});
+    
+  }
+});
+
+
+// getMe for the currently authenticated user
+apiRouter.get('/user/me', async (req, res) => {
+  connection = getMondo("login");
+  authToken = req.cookies['token'];
+  const user = await collection.findOne({ token: authToken });
+  if (user) {
+    res.send({ email: user.email });
+    return;
+  }
+  res.status(401).send({ msg: 'Unauthorized' });
+});
+
+function getUser(email) {
+  collection = getMondo("login");
+  return collection.findOne({ email: email });
+}
+
+
+async function createUser(email, password) {
+  collection = getMondo("login");
+
+  const passwordHash = await bcrypt.hash(password, 10);
+  const user = {
+    email: email,
+    password: passwordHash,
+    token: uuid.v4(),
+  };
+
+  insertMondo("login", user)
+
+  const score = {
+    name: email,
+    win: 0,
+    total: 0 
+  }
+
+  insertMondo("scores", score)
+
+  const player = {
+    name: email,
+    perc: 0
+  }
+
+  insertMondo("players", player)
+  
+
+  return user;
+}
+
+
+function setAuthCookie(res, authToken) {
+  res.cookie('token', authToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+}
+
 
 
 
