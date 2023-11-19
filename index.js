@@ -19,7 +19,7 @@ app.use(`/api`, apiRouter);
 
 // set up mondo database connection
 const { MongoClient } = require('mongodb');
-const config = require('./.gitignore/dbConfig.json');
+const config = require('./dbConfig.json');
 
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {
