@@ -99,6 +99,20 @@ For this deliverable I added the ability to login to the website
 
 </ul>
 
+## Websocket deliverable
+For this deliverable I moved the lobby to check through the websocket if users are active
+
+<ul>
+
+  <li>Added list of active users to the websocket backend</li>
+  <li>Added ability to send username to frontend from backend</li>
+  <li>front end lobby can check for active users thorugh the websocket, this is much faster than using mongodb for active users</li>
+  <li>added ping system so that when users leave, they are removed from the lobby quickly</li>
+  <li>In the future I will add the ability to send game data over a websocket, but I believe this list of active users in the lobby demonstrates understanding of websockets and how to use them</li>
+
+</ul>
+
+
 
 
 
