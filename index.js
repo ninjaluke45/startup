@@ -33,7 +33,7 @@ app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
 
-app.listen(port, () => {
+const httpService = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
@@ -402,7 +402,12 @@ function setAuthCookie(res, authToken) {
 }
 
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ noServer: true });
+httpService.on('upgrade', (request, socket, head) => {
+  wss.handleUpgrade(request, socket, head, function done(ws) {
+    wss.emit('connection', ws, request);
+  });
+});
 
 let activePlayers = [];
 

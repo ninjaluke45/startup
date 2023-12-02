@@ -169,7 +169,7 @@ class GameOfWar {
         });
 
     }
-}
+
 
 setUp()
 

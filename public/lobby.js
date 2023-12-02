@@ -20,7 +20,7 @@ function startGame(op) {
 function updateTable(data) {
   const tableBody = document.querySelector('table tbody');
   tableBody.innerHTML = ''; // Clear the table body
-  console.log(data)
+  console.log("table data:", data)
   data.forEach((entry) => {
     const row = document.createElement('tr');
 
@@ -55,6 +55,8 @@ function onStartup(){
   const matchedPlayers = playerList.filter(player =>
     activePlayers.some(activePlayer => activePlayer.username === player.name)
   ).map(player => player.name);
+
+  console.log("matched players: ", matchedPlayers);
   
 
   
@@ -82,11 +84,14 @@ async function getPlayers() {
   }
 }
 
-const ws = new WebSocket('ws://localhost:8080');
+const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+
+const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
 var activePlayers = [];
 
 ws.addEventListener('open', function (event) {
   // Handle connection open
+  console.log("websocket connection success")
   username = localStorage.getItem("userName")
   ws.send(JSON.stringify({ type: 'username', username1: username }));
 });
