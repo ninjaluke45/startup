@@ -52,7 +52,14 @@ function onStartup(){
 
   console.log("playerlist: ", playerList);
 
-  updateTable(playerList);
+  const matchedPlayers = playerList.filter(player =>
+    activePlayers.some(activePlayer => activePlayer.username === player.name)
+  ).map(player => player.name);
+  
+
+  
+
+  updateTable(matchedPlayers);
 
 
   return true;
@@ -74,5 +81,53 @@ async function getPlayers() {
     console.log("failed to get players")
   }
 }
+
+const ws = new WebSocket('ws://localhost:8080');
+var activePlayers = [];
+
+ws.addEventListener('open', function (event) {
+  // Handle connection open
+  username = localStorage.getItem("userName")
+  ws.send(JSON.stringify({ type: 'username', username1: username }));
+});
+
+ws.addEventListener('message', function (event) {
+  // Handle incoming messages
+  const data = JSON.parse(event.data);
+
+  // If the server is sending ping messages
+  if (data.type === 'ping') {
+    // Respond with a pong message to indicate the client is active
+    ws.send(JSON.stringify({ type: 'pong' }));
+  }
+
+  // You can handle other types of messages here if needed
+  if (data.type === 'activePlayersUpdate') {
+    activePlayers = data.players;
+
+    playerList = JSON.parse(localStorage.getItem("players"))
+
+    const matchedPlayers = playerList.filter(player =>
+      activePlayers.some(activePlayer => activePlayer.username === player.name)
+    ).map(player => player);
+    
+    console.log("active players", matchedPlayers)
+
+    
+
+    updateTable(matchedPlayers);
+  }
+    
+});
+
+function sendPlayerAction(action) {
+  // Send player actions to the server if needed
+  ws.send(JSON.stringify({ type: 'playerAction', action }));
+}
+
+ws.addEventListener('close', function () {
+  // Handle connection closure
+  // You may want to implement reconnection logic here if needed
+});
 
 onStartup();

@@ -401,6 +401,97 @@ function setAuthCookie(res, authToken) {
   });
 }
 
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
+
+let activePlayers = [];
+
+function broadcastActivePlayersUpdate() {
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ type: 'activePlayersUpdate', players: activePlayers }));
+      console.log("sent websocket users", activePlayers)
+    }
+  });
+}
+
+wss.on('connection', function connection(ws) {
+  let playerId = generateUniqueId(); // You'd implement your own unique ID generation logic
+
+  let playerUsername = null;
+
+  ws.on('message', function incoming(message) {
+    // Handle incoming messages if needed
+    const data = JSON.parse(message);
+
+    if (data.type === 'username') {
+      const username = data.username1;
+      // Do something with the received username (e.g., store it with the player information)
+      playerUsername = username;
+
+      activePlayers.push({
+        id: playerId,
+        username: playerUsername
+      });5
+
+      // Broadcast the updated list of active players to all connected clients
+      broadcastActivePlayersUpdate();
+      
+    }
+  });
+
+  
+  
+
+  // Ping the client periodically to check if it's still connected
+  const pingInterval = setInterval(() => {
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.ping();
+      
+    } else {
+      clearInterval(pingInterval);
+    }
+  }, 5000); // Adjust the interval as needed
+
+  let pongReceived = true;
+
+  ws.on('pong', () => {
+    // The client responded to the ping, so it's still connected
+    pongReceived = true;
+  });
+
+  
+
+  ws.on('close', function close() {
+    // Handle player disconnect
+    activePlayers = activePlayers.filter(player => player.id !== playerId);
+
+    // Broadcast the updated list of active players to all connected clients
+    broadcastActivePlayersUpdate();
+
+    clearInterval(pingInterval);
+  });
+
+  // Check for pong response after each ping interval
+  const checkPongResponse = setInterval(() => {
+    if (!pongReceived) {
+      // If no pong response received, assume the player is disconnected
+      clearInterval(pingInterval);
+      clearInterval(checkPongResponse);
+      ws.terminate(); // Close the WebSocket connection
+    } else {
+      pongReceived = false; // Reset flag for the next interval
+    }
+  }, 6000);
+});
+
+
+function generateUniqueId() {
+  const timestamp = Date.now().toString(36); // Convert current time to base36 string
+  const randomString = Math.random().toString(36).substring(2, 8); // Generate random string and take a substring
+
+  return timestamp + randomString;
+}
 
 
 

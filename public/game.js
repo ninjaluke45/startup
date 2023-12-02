@@ -26,9 +26,81 @@ class GameOfWar {
         if (bot) {
             this.playBotWithButton();
         }
+        else{
+            this.playOppWithButton();
+        }
 
-        // once I have the websocket will add a player mode
+        
     }
+
+    playOppWithButton() {
+        const startRoundButton = document.getElementById('startRoundButton'); // Replace with your actual button
+        
+
+        if(this.userDeck.length == 0){
+            winner(False);
+            window.location.href = "lobby.html";
+        }
+
+        else if(this.botDeck.length == 0){
+            winner(True);
+            window.location.href = "lobby.html";
+        }
+
+        
+
+        startRoundButton.addEventListener('click', async () => {
+            updateCount(this.userDeck.length);
+
+
+            const playerCard = this.userDeck.pop();
+            const botCard = this.botDeck.pop();
+            console.log("user")
+            console.log(playerCard)
+            console.log()
+            console.log(botCard)
+            console.log()
+
+            replacePhotoLink(true, playerCard);
+            replacePhotoLink(false, botCard);
+
+                // Compare playerCard and botCard and determine the winner
+            const roundWinner = compareCards(playerCard, botCard);
+
+
+            if (roundWinner === 'W') {
+                this.userDeck.unshift(playerCard, botCard);
+            } else if (roundWinner === 'L') {
+                this.botDeck.unshift(botCard, playerCard);
+            }else{
+                this.junkDeck.unshift(botCard, playerCard);
+            }
+
+            // Update the count and shuffle decks here
+
+            
+
+            shuffleArray(this.userDeck);
+            shuffleArray(this.botDeck);
+
+            
+
+            console.log("userdeck")
+            console.log(this.userDeck.length)
+            // console.log(this.userDeck)
+
+            console.log("botdeck")
+            console.log(this.botDeck.length)
+            console.log()
+            // console.log(this.botDeck)
+
+            // Pause for a brief moment between rounds (adjust as needed)
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+        
+        });
+
+    }
+}
 
     playBotWithButton() {
         const startRoundButton = document.getElementById('startRoundButton'); // Replace with your actual button

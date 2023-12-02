@@ -19,22 +19,15 @@ async function login() {
 
     try {
       const response = await fetch('/api/auth/login', {
-        method: 'POST',
+        method: 'POST', 
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
       });
-
-      console.log("here #1")
-
-      alert("yusboi2")
   
       const data = await response.json();
 
-
-
-      alert("yusboi1")
       localStorage.setItem("token", data.id);
 
 
@@ -54,7 +47,7 @@ async function login() {
       }
     } catch (error) {
       console.error('Error:', error.message);
-      alert('Error:' +  error.message)
+      //alert('Error:' +  error.message)
       
       // Handle other types of errors (network, server, etc.)
     }
