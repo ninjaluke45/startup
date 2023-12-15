@@ -1,12 +1,15 @@
 import React from 'react';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
-// import { Login } from './login/login';
-// import { Play } from './play/play';
-// import { Scores } from './scores/scores';
-// import { About } from './about/about';
+import { Login } from './login/login';
+import { Lobby } from './lobby/lobby';
+import { Leaderboard } from './leaderboard/leaderboard';
+import { Game } from './game/game';
 // import { AuthState } from './login/authState';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
+import './lobby/lobby.css';
+import './leaderboard/leaderboard.css';
+import './game/game.css';
 
 function App() {
 //   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
@@ -28,47 +31,51 @@ function App() {
       
       <nav>
         <menu>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="lobby.html">Lobby</a></li>
-          <li><a href="leaderboard.html">Leaderboard</a></li>
+            
+
+          <li className='nav-item'>
+                  <NavLink className='nav-link' to=''>
+                    Home
+                  </NavLink>
+            </li>
+            <li className='nav-item'>
+                  <NavLink className='nav-link' to='lobby'>
+                    Lobby
+                  </NavLink>
+            </li>
+            <li className='nav-item'>
+                  <NavLink className='nav-link' to='leaderboard'>
+                    Leaderboard
+                  </NavLink>
+            </li>
+            
           
         </menu>
       </nav>
       <hr />
     </header>
 
-    <main>
-    <h1>Welcome</h1>
-    <p>Login to play</p>
-    <form id="loginForm" method="get" action="lobby.html"  onsubmit="return login()"> 
-        <input type="text" id="name" placeholder="Username" />
-        <br /> 
-        <input type="password" id="password" placeholder="Password" />
-        <br /> 
-        <button type="submit">Login</button>
-    </form>
-    </main>
+    
 
-        {/* <Routes>
+        <Routes>
           <Route
             path='/'
             element={
               <Login
-                userName={userName}
-                authState={authState}
-                onAuthChange={(userName, authState) => {
-                  setAuthState(authState);
-                  setUserName(userName);
-                }}
+                // userName={userName}
+                // authState={authState}
+                // onAuthChange={(userName, authState) => {
+                //   setAuthState(authState);
+                //   setUserName(userName);
+                // }}
               />
             }
             exact
           />
-          <Route path='/play' element={<Play userName={userName} />} />
-          <Route path='/scores' element={<Scores />} />
-          <Route path='/about' element={<About />} />
+          <Route path='/lobby' element={<Lobby />} />
+          <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='*' element={<NotFound />} />
-        </Routes> */}
+        </Routes>
 
     <footer>
       <hr />
