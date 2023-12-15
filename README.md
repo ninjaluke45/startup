@@ -111,6 +111,18 @@ For this deliverable I changed the lobby to check through the websocket if users
 
 </ul>
 
+## React deliverable
+For this deliverable I changed the code to use react
+<ul>
+
+  <li>I bundled it in a webpack and babel</li>
+  <li>I have multiple functional react components/li>
+  <li>I have a router that can transition between components</li>
+  <li>I use react hooks to log into my app</li>
+
+
+</ul>
+
 
 
 

@@ -12,9 +12,8 @@ import './leaderboard/leaderboard.css';
 import './game/game.css';
 
 function App() {
-//   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
-//   const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
-//   const [authState, setAuthState] = React.useState(currentAuthState);
+    const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+
 
   return (
     <BrowserRouter>
@@ -58,20 +57,7 @@ function App() {
     
 
         <Routes>
-          <Route
-            path='/'
-            element={
-              <Login
-                // userName={userName}
-                // authState={authState}
-                // onAuthChange={(userName, authState) => {
-                //   setAuthState(authState);
-                //   setUserName(userName);
-                // }}
-              />
-            }
-            exact
-          />
+          <Route path='/' element={ <Login/>}exact/>
           <Route path='/lobby' element={<Lobby />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='*' element={<NotFound />} />

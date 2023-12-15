@@ -1,42 +1,53 @@
-import React from 'react';
-
-// import { Unauthenticated } from './unauthenticated';
-// import { Authenticated } from './authenticated';
-// import { AuthState } from './authState';
+import React, { useEffect, useState } from 'react';
 
 export function Leaderboard() {
+  const [scores, setScores] = useState([]);
+
+  const updateTable = (data) => {
+    return data.map((entry, index) => (
+      <tr key={index}>
+        <td>{index + 1}</td>
+        <td>{entry.name}</td>
+        <td>{String(Math.round((entry.win / entry.total) * 100))}</td>
+      </tr>
+    ));
+  };
+
+  useEffect(() => {
+    const onStartup = async () => {
+      try {
+        const response = await fetch('/api/scores', {
+          method: 'GET',
+          headers: { 'content-type': 'application/json' },
+        });
+
+        const scoresData = await response.json();
+        localStorage.setItem('scores', JSON.stringify(scoresData));
+        setScores(scoresData);
+      } catch (error) {
+        console.log("Failed to get scores:", error);
+        // Handle error fetching scores if needed
+      }
+    };
+
+    onStartup();
+  }, []); // Run onStartup once on component mount
+
   return (
     <main>
       <h2>High Scores</h2>
       <table>
         <thead>
           <tr>
-      <th>Rank</th>
-      <th>Player Name</th>
-      <th>Winning Percentage</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>Player 1</td>
-      <td>.75</td>
-      
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Player 2</td>
-      <td>.70</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Player 3</td>
-      <td>.66</td>
-    </tr>
+            <th>Rank</th>
+            <th>Player Name</th>
+            <th>Winning Percentage</th>
+          </tr>
+        </thead>
+        <tbody>
+          {updateTable(scores)}
         </tbody>
       </table>
-      
-      
     </main>
   );
 }
