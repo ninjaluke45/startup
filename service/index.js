@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 
+
 const uuid = require('uuid');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
@@ -23,15 +24,14 @@ app.use(express.static('public'));
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
+app.set('trust proxy', true);
+
 
 // set up mondo database connection
 const { MongoClient } = require('mongodb');
-const config = require('../dbConfig.json');
+const config = require('./dbConfig.json');
 
-// Return the application's default page if the path is unknown
-app.use((_req, res) => {
-  res.sendFile('index.html', { root: 'public' });
-});
+
 
 const httpService = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
@@ -497,6 +497,12 @@ function generateUniqueId() {
 
   return timestamp + randomString;
 }
+
+
+// Return the application's default page if the path is unknown
+app.use((_req, res) => {
+  res.sendFile('index.html', { root: 'public'});
+});
 
 
 

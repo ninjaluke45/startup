@@ -2,9 +2,9 @@
   "name": "startup",
   "version": "1.0.0",
   "description": "I plan on making a game that allows people to play a game of War (the card game) with another person online. I think that this could be a fun and easy game to play with other people. People could play with their friends or with a stranger. Their winning percentage would be kept track of and be displayed on a leaderboard.",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
